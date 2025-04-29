@@ -1,5 +1,6 @@
 import System.IO
-import Data.Maybe
+import Data.Maybe(fromMaybe)
+import Control.Parallel.Strategies
 
 
 pl = [2,3,5,7,11,13,17,19,23]
@@ -53,8 +54,8 @@ frequencyTable xs n = [(i, count i) | i <- [1..n]]
 
 
 main = do
-  let n = 2^21
-  let clean_data = cleanData $ map firstWitness [25,27..n]
+  let n = 2^25
+  let clean_data = cleanData $ parMap rdeepseq firstWitness [(2^20 + 1), (2^20 + 3) .. 2^30]
   let sub_data = substitute clean_data (zip pl [1..])
   let table = frequencyTable sub_data 9
   writeFile "dataH.txt" (unlines $ map (\(x,y) -> show x ++ ":" ++ show y) table)
