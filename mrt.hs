@@ -55,7 +55,7 @@ frequencyTable xs n = [(i, count i) | i <- [1..n]]
 
 main = do
   let n = 2^25
-  let clean_data = cleanData $ parMap rdeepseq firstWitness [(2^20 + 1), (2^20 + 3) .. 2^30]
+  let clean_data = cleanData $ parMap rdeepseq firstWitness [25,27..n]
   let sub_data = substitute clean_data (zip pl [1..])
   let table = frequencyTable sub_data 9
   writeFile "dataH.txt" (unlines $ map (\(x,y) -> show x ++ ":" ++ show y) table)
